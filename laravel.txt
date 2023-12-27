@@ -1,0 +1,14 @@
+How to pass Multiple Variable in route?
+-> In Laravel, you can pass multiple variables in a route by defining route parameters in the route definition. Route parameters are enclosed in {} curly braces. Here's an example of how you can pass multiple variables in a route:
+
+
+
+use Illuminate\Support\Facades\Route;
+
+Route::get('/user/{user_id}/{username}', 'UserController@show');
+
+// Controller Method
+public function show($user_id, $username)
+{
+    return "User ID: $user_id, Username: $username";
+}
