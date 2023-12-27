@@ -102,3 +102,55 @@ Or applying the middleware directly to a route in your routes/web.php or routes/
 Route::get('/example', 'ExampleController@index')->middleware('auto-logging');
 
 Now, every time a request is made to your application, the AutoLoggingMiddleware will log information about the request. Customize the middleware's handle method to suit your specific auto-logging needs.
+
+In Employee Controller‟s action Call Middleware
+->
+To call middleware in an action of the EmployeeController in Laravel, you can use the middleware method in the controller constructor or directly in the action method. Below are examples for both approaches:
+
+1. Applying Middleware in Controller Constructor:
+Open the EmployeeController.php file, and add the following code to the constructor:
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Employee;
+
+class EmployeeController extends Controller
+{
+    public function __construct()
+    {
+        // Apply middleware to all actions in the controller
+        $this->middleware('your-middleware-name');
+    }
+
+    // ... rest of the controller code
+}
+Replace 'your-middleware-name' with the actual name of the middleware you want to apply. This middleware will be applied to all actions in the EmployeeController.
+
+2. Applying Middleware in a Specific Action:
+If you want to apply middleware only to a specific action, you can use the middleware method directly within that action:
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Employee;
+
+class EmployeeController extends Controller
+{
+    public function someAction()
+    {
+        $this->middleware('your-middleware-name');
+
+        // Your action logic here
+    }
+
+    // ... rest of the controller code
+}
+Again, replace 'your-middleware-name' with the actual name of the middleware you want to apply. This middleware will be applied only to the someAction method.
+
+Make sure to replace 'your-middleware-name' with the actual middleware name you want to use.
