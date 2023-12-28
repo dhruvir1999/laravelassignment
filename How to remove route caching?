@@ -1,0 +1,15 @@
+
+To remove route caching in Laravel, you can use the route:clear Artisan command.
+This command will clear the route cache file, and Laravel will then recompile the routes the next time they are accessed. 
+Follow these steps:
+
+Open your terminal or command prompt.
+
+Run the following Artisan command:
+
+php artisan route:clear
+This command will remove the cached routes, and Laravel will regenerate the routes on the next request.
+
+Remember that route caching is typically used in production to optimize the performance of your application by reducing the time it takes to register routes. 
+In a development environment, it's often not necessary to use route caching, as Laravel will dynamically reload the routes. 
+If you encounter any issues related to routes during development, clearing the route cache can be a useful step.
