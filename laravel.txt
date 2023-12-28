@@ -1,4 +1,4 @@
-How to pass Multiple Variable in route?
+1] How to pass Multiple Variable in route?
 -> In Laravel, you can pass multiple variables in a route by defining route parameters in the route definition. 
 Route parameters are enclosed in {} curly braces. 
 Here's an example of how you can pass multiple variables in a route:
@@ -15,7 +15,7 @@ public function show($user_id, $username)
     return "User ID: $user_id, Username: $username";
 }
 
-How to pass variable which can be null in Route?
+2] How to pass variable which can be null in Route?
 -> In Laravel, you can make a route parameter optional by providing a default value in the route definition. 
 If the parameter is not present in the URL, Laravel will automatically use the default value. 
 Here's an example of how you can pass a variable that can be null in a route:
@@ -42,68 +42,68 @@ public function show($user_id = null, $username = null)
     // Your response logic here
 }
 
-Create custom auto using middleware. 
+3] Create custom auto using middleware. 
 -> Creating a custom middleware in Laravel allows you to perform tasks before or after a request enters your application. To create a custom middleware for handling auto-logging, follow these steps:
 
-1)Generate the Middleware:
-Run the following Artisan command to generate a new middleware:
+    1)Generate the Middleware:
+    Run the following Artisan command to generate a new middleware:
+    
+    php artisan make:middleware AutoLoggingMiddleware
+    
+    This command will create a new file in the app/Http/Middleware directory called AutoLoggingMiddleware.php.
+    
+    2)Edit the Middleware:
+    Open the AutoLoggingMiddleware.php file and modify the handle method to implement the desired auto-logging functionality. Below is a     basic example that logs the request method and URI:
 
-php artisan make:middleware AutoLoggingMiddleware
-
-This command will create a new file in the app/Http/Middleware directory called AutoLoggingMiddleware.php.
-
-2)Edit the Middleware:
-Open the AutoLoggingMiddleware.php file and modify the handle method to implement the desired auto-logging functionality. Below is a basic example that logs the request method and URI:
-
-<?php
-
-namespace App\Http\Middleware;
-
-use Closure;
-use Illuminate\Support\Facades\Log;
-
-class AutoLoggingMiddleware
-{
-    public function handle($request, Closure $next)
+    <?php
+    
+    namespace App\Http\Middleware;
+    
+    use Closure;
+    use Illuminate\Support\Facades\Log;
+    
+    class AutoLoggingMiddleware
     {
-        // Log the request method and URI
-        Log::info("Request: {$request->method()} - {$request->fullUrl()}");
-
-        return $next($request);
+        public function handle($request, Closure $next)
+        {
+            // Log the request method and URI
+            Log::info("Request: {$request->method()} - {$request->fullUrl()}");
+    
+            return $next($request);
+        }
     }
-}
-
-3)Register the Middleware:
-Add your middleware to the $middleware property in the App/Http/Kernel.php file. You can add it to the global middleware, or you can apply it to specific routes or route groups.
-
-// App/Http/Kernel.php
-
-protected $middleware = [
-    // ... other middleware
-
-    \App\Http\Middleware\AutoLoggingMiddleware::class,
-];
-(Optional) Apply Middleware to Specific Routes:
-If you want to apply the middleware to specific routes or route groups, you can do so in the App/Http/Kernel.php file or by using route middleware in your routes/web.php or routes/api.php file.
-
-For example, applying the middleware to all routes within a specific route group:
-
-
-// App/Http/Kernel.php
-
-protected $middlewareGroups = [
-    'web' => [
+    
+    3)Register the Middleware:
+    Add your middleware to the $middleware property in the App/Http/Kernel.php file. You can add it to the global middleware, or you can     apply it to specific routes or route groups.
+    
+    // App/Http/Kernel.php
+    
+    protected $middleware = [
         // ... other middleware
+    
         \App\Http\Middleware\AutoLoggingMiddleware::class,
+    ];
+    (Optional) Apply Middleware to Specific Routes:
+    If you want to apply the middleware to specific routes or route groups, you can do so in the App/Http/Kernel.php file or by using         route middleware in your routes/web.php or routes/api.php file.
+    
+    For example, applying the middleware to all routes within a specific route group:
+    
+    
+    // App/Http/Kernel.php
+    
+    protected $middlewareGroups = [
+        'web' => [
+            // ... other middleware
+            \App\Http\Middleware\AutoLoggingMiddleware::class,
     ],
-];
-Or applying the middleware directly to a route in your routes/web.php or routes/api.php file:
+    ];
+    Or applying the middleware directly to a route in your routes/web.php or routes/api.php file:
+    
+    Route::get('/example', 'ExampleController@index')->middleware('auto-logging');
+    
+    Now, every time a request is made to your application, the AutoLoggingMiddleware will log information about the request. Customize     the middleware's handle method to suit your specific auto-logging needs.
 
-Route::get('/example', 'ExampleController@index')->middleware('auto-logging');
-
-Now, every time a request is made to your application, the AutoLoggingMiddleware will log information about the request. Customize the middleware's handle method to suit your specific auto-logging needs.
-
-In Employee Controller‟s action Call Middleware
+4] In Employee Controller‟s action Call Middleware
 ->
 To call middleware in an action of the EmployeeController in Laravel, you can use the middleware method in the controller constructor or directly in the action method. Below are examples for both approaches:
 
