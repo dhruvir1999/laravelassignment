@@ -1,0 +1,59 @@
+
+In Laravel, you can create a custom macro for the Eloquent query builder to add a search functionality to your User model. 
+Here's an example of how you can create a custom macro for searching users:
+
+Open the AppServiceProvider.php file, located in the app/Providers directory.
+
+Add the following code in the boot method:
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Builder;
+
+public function boot()
+{
+    // ...
+
+    // Define a custom macro for searching users
+    Builder::macro('searchUser', function ($searchTerm) {
+        return $this->where(function ($query) use ($searchTerm) {
+            $query->where('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            // Add more fields as needed
+        });
+    });
+}
+
+Don't forget to import the necessary classes at the top of the AppServiceProvider:
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
+Open the User model (typically located at app/Models/User.php) and add the following code:
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    // Your existing User model code...
+
+    // Use the custom macro in your User model
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->searchUser($searchTerm);
+    }
+}
+This code adds a searchUser macro to the Eloquent query builder, and the User model includes a scopeSearch method that utilizes this macro.
+You can now use the search scope to search for users based on the specified fields (in this case, name and email).
+
+Example usage in a controller or elsewhere:
+
+use App\Models\User;
+
+public function searchUsers($searchTerm)
+{
+    $users = User::search($searchTerm)->get();
+    // Process the search results...
+}
+Adjust the searchUser macro to include additional fields as needed for your specific use case. 
+This example searches the name and email fields, but you can customize it to fit your database schema and requirements.
