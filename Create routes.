@@ -1,0 +1,86 @@
+Create Following Routes.(for frontend side application)
+a) Home page
+b) About us
+c) Contact us
+d) Gallery
+e) Registration
+f) Login 
+
+To create routes for the frontend side of your Laravel application, you can follow these steps:
+
+
+
+This file is used for defining web routes. Add the following routes for the pages you mentioned:
+
+use App\Http\Controllers\FrontendController;
+
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/about-us', [FrontendController::class, 'aboutUs'])->name('about-us');
+Route::get('/contact-us', [FrontendController::class, 'contactUs'])->name('contact-us');
+Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
+Route::get('/registration', [FrontendController::class, 'registration'])->name('registration');
+Route::get('/login', [FrontendController::class, 'login'])->name('login');
+Create a FrontendController:
+
+Run the following command to generate a controller for handling frontend views:
+
+php artisan make:controller FrontendController
+Open the generated FrontendController located in app/Http/Controllers and define methods for each route:
+
+
+// app/Http/Controllers/FrontendController.php
+
+namespace App\Http\Controllers;
+
+class FrontendController extends Controller
+{
+    public function home()
+    {
+        return view('frontend.home');
+    }
+
+    public function aboutUs()
+    {
+        return view('frontend.about_us');
+    }
+
+    public function contactUs()
+    {
+        return view('frontend.contact_us');
+    }
+
+    public function gallery()
+    {
+        return view('frontend.gallery');
+    }
+
+    public function registration()
+    {
+        return view('frontend.registration');
+    }
+
+    public function login()
+    {
+        return view('frontend.login');
+    }
+}
+Create Blade Views:
+
+Create Blade views for each route in the resources/views/frontend directory (or any directory structure you prefer). 
+For example, create files like home.blade.php, about_us.blade.php, etc.
+
+Test Your Routes:
+
+Start your Laravel development server:
+
+php artisan serve
+
+Visit the following URLs in your browser to test your routes:
+
+Home: http://127.0.0.1:8000
+About Us: http://127.0.0.1:8000/about-us
+Contact Us: http://127.0.0.1:8000/contact-us
+Gallery: http://127.0.0.1:8000/gallery
+Registration: http://127.0.0.1:8000/registration
+Login: http://127.0.0.1:8000/login
+Remember to customize the routes, controller methods, and views based on your application's structure and design.
