@@ -1,0 +1,86 @@
+Step 1: Create the Employee Table Migration
+
+php artisan make:migration create_employees_table
+
+// database/migrations/xxxx_xx_xx_create_employees_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateEmployeesTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('employees', function (Blueprint $table) {
+            $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->string('job_title');
+            // Add other fields as needed
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('employees');
+    }
+}
+
+Step 2: Run the Migration
+
+php artisan migrate
+
+Step 3: Create a Model
+
+php artisan make:model Employee
+
+Step 4: Define the Employee Model
+
+// app/Models/Employee.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Employee extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'job_title',
+    ];
+}
+
+Step 5: Seed the Database (Optional)
+
+php artisan make:seeder EmployeesTableSeeder
+
+// database/seeders/EmployeesTableSeeder.php
+
+use Illuminate\Database\Seeder;
+use App\Models\Employee;
+
+class EmployeesTableSeeder extends Seeder
+{
+    public function run()
+    {
+        Employee::create([
+            'first_name' => 'Dhruvi',
+            'last_name' => 'Mengar',
+            'email' => 'd99@gmail.com',
+            'job_title' => 'Developer',
+        ]);
+
+        // Add more sample data as needed
+    }
+}
+
+
+
