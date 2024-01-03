@@ -1,0 +1,27 @@
+Step 1: Create the Stored Procedure in MySQL
+
+DELIMITER //
+CREATE PROCEDURE your_stored_procedure(IN param1 INT, IN param2 VARCHAR(255))
+BEGIN
+    SELECT * FROM your_table WHERE column1 = param1 AND column2 = param2;
+END //
+DELIMITER ;
+
+Step 2: Call the Stored Procedure in Laravel
+
+use Illuminate\Support\Facades\DB;
+
+class YourController extends Controller
+{
+    public function callStoredProcedure()
+    {
+        $param1 = 123;
+        $param2 = 'example';
+        $results = DB::select('CALL your_stored_procedure(?, ?)', [$param1, $param2]);
+        foreach ($results as $result) {
+            $column1Value = $result->column1;
+            $column2Value = $result->column2;
+        }
+        return $results;
+    }
+}
