@@ -1,0 +1,80 @@
+1. Create Operation (Insert)
+
+use Illuminate\Support\Facades\DB;
+
+class EmployeeController extends Controller
+{
+    public function createEmployee()
+    {
+        $data = [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john.doe@example.com',
+        ];
+        $result = DB::table('employees')->insert($data);
+
+        if ($result) {
+            return "Employee created successfully!";
+        } else {
+            return "Failed to create employee.";
+        }
+    }
+}
+
+2. Read Operation (Select)
+
+use Illuminate\Support\Facades\DB;
+
+class EmployeeController extends Controller
+{
+    public function getEmployees()
+    {
+        $employees = DB::table('employees')->get();
+
+        return view('employees.index', ['employees' => $employees]);
+    }
+}
+
+3. Update Operation
+
+use Illuminate\Support\Facades\DB;
+
+class EmployeeController extends Controller
+{
+    public function updateEmployee($id)
+    {
+        $data = [
+            'first_name' => 'UpdatedFirstName',
+            'last_name' => 'UpdatedLastName',
+            'email' => 'updated.email@example.com',
+        ];
+
+        $result = DB::table('employees')->where('id', $id)->update($data);
+
+        if ($result) {
+            return "Employee updated successfully!";
+        } else {
+            return "Failed to update employee.";
+        }
+    }
+}
+
+4. Delete Operation
+
+use Illuminate\Support\Facades\DB;
+
+class EmployeeController extends Controller
+{
+    public function deleteEmployee($id)
+    {
+        $result = DB::table('employees')->where('id', $id)->delete();
+
+        if ($result) {
+            return "Employee deleted successfully!";
+        } else {
+            return "Failed to delete employee.";
+        }
+    }
+}
+
+
